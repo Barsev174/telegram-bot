@@ -11,10 +11,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import repositiry.NotificationTaskRepository;
+import pro.sky.telegrambot.repositiry.NotificationTaskRepository;
 
 import javax.annotation.PostConstruct;
-import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -26,19 +25,15 @@ import java.util.regex.Pattern;
 
 @Service
 public class TelegramBotUpdatesListener implements UpdatesListener {
-
-    private Logger logger = LoggerFactory.getLogger(TelegramBotUpdatesListener.class);
-
-    private final TelegramBot telegramBot;
-
+    @Autowired
     private NotificationTaskRepository notificationTaskRepository;
+    @Autowired
+    private TelegramBot telegramBot;
+    private Logger logger = LoggerFactory.getLogger(TelegramBotUpdatesListener.class);
 
     private final String WELCOME_MSG_TEXT = "Для того, чтобы запланировать задачу отправьте ее в формате: \n **01.01.2023 12:00 Подготовиться к собеседованию ";
     private final String NOTIFICATION_TASK_PATTERN = "([0-9\\.\\:\\s]{16})(\\s)([\\W+]+)";
 
-    public TelegramBotUpdatesListener(TelegramBot telegramBot) {
-        this.telegramBot = telegramBot;
-    }
 
     @PostConstruct
     public void init() {
