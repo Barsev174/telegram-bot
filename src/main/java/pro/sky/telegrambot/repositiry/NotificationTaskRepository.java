@@ -1,4 +1,4 @@
-package repositiry;
+package pro.sky.telegrambot.repositiry;
 
 import pro.sky.telegrambot.entity.NotificationTask;
 import org.springframework.data.jpa.repository.JpaRepository;
